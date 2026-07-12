@@ -23,7 +23,7 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Run renderer
-      run: ./build/raytracer
+      run: ./build/RayTracer
 
     - name: Upload rendered image
       uses: actions/upload-artifact@v4
