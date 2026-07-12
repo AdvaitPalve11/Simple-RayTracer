@@ -1,0 +1,60 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# Compiled binaries
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.a
+*.lib
+*.obj
+*.o
+
+# Debug files
+*.pdb
+*.ilk
+*.dSYM/
+
+# Visual Studio files
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# VS Code settings
+.vscode/
+
+# CLion files
+.idea/
+
+# Generated images
+*.ppm
+*.png
+*.jpg
+*.jpeg
+*.bmp
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
