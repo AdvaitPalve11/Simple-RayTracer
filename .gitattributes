@@ -1,0 +1,2 @@
+third_party/** linguist-vendored
+include/stb_image_write.h linguist-vendored
