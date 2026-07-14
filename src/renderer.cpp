@@ -16,12 +16,21 @@ void Renderer::render(){
 
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
+            
+            //convert pixel coords to values btw 0 & 1
+            double u = static_cast<double>(x) / (width-1);
+            double v = static_cast<double>(y) / (height-1);
+            
+            //Convert to RGB values ( 0 to 255)
+            unsigned char r = static_cast<unsigned char>(255*u);
+            unsigned char g =  static_cast<unsigned char>(255*v);
+            unsigned char b = 128;
 
             int index = (y * width + x) * 3;
 
-            image[index + 0] = 50;   // R
-            image[index + 1] = 100;  // G
-            image[index + 2] = 255;  // B
+            image[index + 0] = r;   // R
+            image[index + 1] = g;  // G
+            image[index + 2] = b;  // B
         }
 }
 
