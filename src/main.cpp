@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Vec3.h"
-
+#include "ray.h"
 int main()
 {
     Vec3 a;
@@ -21,6 +21,8 @@ int main()
     z.print();
 
     std::cout<<d.length();
+
+   
 
     return 0;
 }
