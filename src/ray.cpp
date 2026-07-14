@@ -1,4 +1,7 @@
-#include<ray.h>
+#include "ray.h"
+#include "vec3.h"
+
+Ray::Ray(const Vec3& o , const Vec3& dir) : origin(o) , direction(dir){};
 
 Vec3 Ray::getOrigin() const{
     return origin;

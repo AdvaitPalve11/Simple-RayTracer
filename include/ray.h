@@ -1,6 +1,4 @@
-#pragma once
-
-#include<vec3.h>
+#include "vec3.h"
 
 class Ray{ // P(t) = O + tD
     private:    
@@ -8,10 +6,7 @@ class Ray{ // P(t) = O + tD
         Vec3 direction;
 
     public:
-        Ray(const Vec3& o , const Vec3 dir);
-
-
-    Ray(const Vec3& o , const Vec3& dir) : origin(o) , direction(dir){}
+        Ray(const Vec3& o , const Vec3& dir);
 
     //getters
     Vec3 getOrigin() const;
