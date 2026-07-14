@@ -8,8 +8,8 @@ class Vec3
         double y;
         double z;
 
-    Vec3() : x(0), y(0) , z(0){}; // Initializer list   
-    Vec3(double x , double y , double z) : x(x), y(y),z(z){}; 
+    Vec3(); // Initializer list   
+    Vec3(double x , double y , double z);
         
     //Operations
     Vec3 operator+(const Vec3& other) const;
