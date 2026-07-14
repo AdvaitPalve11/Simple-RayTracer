@@ -1,10 +1,19 @@
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-#include<vector>
+#include <iostream>
+#include "Vec3.h"
 
-#include<iostream>
+int main()
+{
+    Vec3 a;
 
-int main(){
-    std::cout<<"Ray Tracer";
+    Vec3 b(1, 2, 3);
+
+    std::cout << a.x << " "
+              << a.y << " "
+              << a.z << '\n';
+
+    std::cout << b.x << " "
+              << b.y << " "
+              << b.z << '\n';
+
     return 0;
 }
