@@ -2,12 +2,17 @@
 #include "renderer.h"
 #include "Vec3.h"
 #include "ray.h"
+#include <SDL3/SDL.h>
+#include "window.h"
+
 int main()
 {
-   Renderer renderer (800 , 600);
-   renderer.render();
+   Window window(1280,720,"RayTracer");
 
-   
+    while(window.processEvents()){
+        window.clear();
+        window.present();
+    }
 
     return 0;
 }
