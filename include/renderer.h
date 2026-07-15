@@ -1,13 +1,16 @@
 #pragma once
 
+#include <cstdint>
+#include "camera.h"
 #include "framebuffer.h"
 
 class Renderer{
 public:
-    Renderer() = default;
+    Renderer();
 
     void render(Framebuffer& framebuffer);
 
 private:
-    uint32_t rayColor(double u, double v);
+    Camera camera;
+    uint32_t rayColor(const Ray& ray);
 };

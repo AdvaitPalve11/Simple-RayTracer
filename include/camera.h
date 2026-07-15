@@ -18,7 +18,7 @@ class Camera{
     public:
         Camera(double fov, double aspectRatio);
 
-        Ray getRay(double u , double v) const;
+        Ray getRay(double u, double v) const;
 
 
         Vec3 getPosition() const;

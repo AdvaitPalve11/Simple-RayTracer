@@ -1,3 +1,5 @@
+#pragma once
+
 #include "vec3.h"
 
 class Ray{ // P(t) = O + tD
