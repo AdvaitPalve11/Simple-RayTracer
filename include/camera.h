@@ -16,16 +16,10 @@ class Camera{
         double aspectRatio;
 
     public:
-        Camera();
+        Camera(double fov, double aspectRatio);
 
-    Ray getRay(double u , double v) const;
+        Ray getRay(double u , double v) const;
 
-    void moveForward(double distance);
-    void moveRight(double distance);
-    void moveUp(double distance);
 
-    void rotateYaw(double angle);
-    void rotatePitch(double angle);
-
-    Vec3 getPosition() const;
+        Vec3 getPosition() const;
 };

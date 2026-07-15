@@ -20,6 +20,7 @@ add_executable(RayTracer
     src/camera.cpp
     src/window.cpp
     src/framebuffer.cpp
+    
 )
 
 target_link_libraries(RayTracer PRIVATE SDL3::SDL3)

@@ -3,13 +3,11 @@
 #include "framebuffer.h"
 
 class Renderer{
+public:
+    Renderer() = default;
 
-    private:
-        int width;
-        int height;
+    void render(Framebuffer& framebuffer);
 
-    public:
-        Renderer(int width , int height);
-
-        void render(Framebuffer& framebuffer);
+private:
+    uint32_t rayColor(double u, double v);
 };

@@ -12,7 +12,7 @@ int main()
 
     Window window(WIDTH, HEIGHT, "RayTracer");
     Framebuffer framebuffer(WIDTH, HEIGHT);
-    Renderer renderer(WIDTH, HEIGHT);
+    Renderer renderer;
 
     while (window.processEvents())
     {
