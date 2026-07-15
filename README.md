@@ -132,7 +132,7 @@ RayTracer/
 - MSYS2 UCRT64 (Windows)
 
 ```bash
-git clone [<repository-url>](https://github.com/AdvaitPalve11/Simple-RayTracer)
+git clone https://github.com/AdvaitPalve11/Simple-RayTracer
 cd RayTracer
 
 cmake -B build
