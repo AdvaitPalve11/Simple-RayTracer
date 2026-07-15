@@ -15,9 +15,13 @@ Window::Window(int w , int h ,const  std::string& title): width(w), height(h) {
         if(!renderer)
             std::cout<<SDL_GetError()<<"\n";
 
+    texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STREAMING,width,height);
+        if(!texture)
+            std::cout<<SDL_GetError<<"\n";
 }
 
 Window::~Window(){
+    SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -41,6 +45,10 @@ void Window::clear(){
     SDL_RenderClear(renderer);
 }
 
-void Window::present(){
+void Window::present(const Framebuffer& framebuffer){
+
+    SDL_UpdateTexture(texture, nullptr, framebuffer.data() , framebuffer.getWidth() * sizeof(uint32_t));
+    SDL_RenderClear(renderer);
+    SDL_RenderTexture(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
 }

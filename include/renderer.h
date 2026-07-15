@@ -1,4 +1,7 @@
 #pragma once
+
+#include "framebuffer.h"
+
 class Renderer{
 
     private:
@@ -6,7 +9,7 @@ class Renderer{
         int height;
 
     public:
-    Renderer(int width , int height);
+        Renderer(int width , int height);
 
-    void render();
+        void render(Framebuffer& framebuffer);
 };

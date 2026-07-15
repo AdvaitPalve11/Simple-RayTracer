@@ -7,11 +7,18 @@
 
 int main()
 {
-   Window window(1280,720,"RayTracer");
+    const int WIDTH = 1280;
+    const int HEIGHT = 720;
 
-    while(window.processEvents()){
-        window.clear();
-        window.present();
+    Window window(WIDTH, HEIGHT, "RayTracer");
+    Framebuffer framebuffer(WIDTH, HEIGHT);
+    Renderer renderer(WIDTH, HEIGHT);
+
+    while (window.processEvents())
+    {
+        renderer.render(framebuffer);
+
+        window.present(framebuffer);
     }
 
     return 0;
