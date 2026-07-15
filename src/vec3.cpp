@@ -34,8 +34,8 @@ Vec3 Vec3::normalized() const{
     return *this / length();
 }
 
-double Vec3::dot(const Vec3& a , const Vec3& b){
-    return  a.x * b.x +a.y * b.y + a.z * b.z;
+double Vec3::dot(const Vec3& other) const{
+    return x * other.x +  y * other.y + z * other.z;
 }
 
 Vec3 Vec3::cross(const Vec3& a , const Vec3& b){

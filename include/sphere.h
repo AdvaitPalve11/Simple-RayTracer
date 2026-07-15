@@ -1,14 +1,15 @@
 #include<vec3.h>
 #include<ray.h>
 
-class sphere {
+class Sphere {
     private:
-        Vec3 origin;
+        Vec3 center;
         double radius;
         
     public:
-    sphere(const Vec3& o , double r) : origin(o) , radius(r){}
+    Sphere(const Vec3& center , double radius);
 
 
-    bool hit(const Ray& ray)const;
+    bool hit(const Ray& ray, double& t) const;
+
 };

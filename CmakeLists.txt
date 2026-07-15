@@ -20,6 +20,7 @@ add_executable(RayTracer
     src/camera.cpp
     src/window.cpp
     src/framebuffer.cpp
+    src/sphere.cpp
     
 )
 
