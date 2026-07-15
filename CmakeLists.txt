@@ -10,9 +10,13 @@ include_directories(
     third_party
 )
 
+find_package(SDL2 REQUIRED)
+
 add_executable(RayTracer
     src/main.cpp
     src/vec3.cpp
     src/ray.cpp
     src/renderer.cpp
 )
+
+target_link_libraries(RayTracer PRIVATE SDL2::SDL2)
