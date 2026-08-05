@@ -43,7 +43,6 @@ compile_commands.json
 
 # Generated images
 *.ppm
-*.png
 *.jpg
 *.jpeg
 *.bmp

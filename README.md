@@ -17,12 +17,12 @@ This project is my attempt to learn computer graphics by implementing everything
 <table align="center">
 <tr>
 <td align="center">
-<img src="assets/gradient.png" width="400"><br>
+<img src="assets/gradient.png" width="350<br>
 <b>Gradient Background</b>
 </td>
 
 <td align="center">
-<img src="assets/Gradient Sphere.png" width="400"><br>
+<img src="assets/normal_visualization.png" width="350"><br>
 <b>Surface Normal Visualization</b>
 </td>
 </tr>
