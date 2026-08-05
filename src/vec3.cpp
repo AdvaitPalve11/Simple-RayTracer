@@ -1,6 +1,6 @@
 #include "vec3.h"
 #include<iostream>
-#include<math.h>
+#include<cmath>
 
 Vec3::Vec3() : x(0), y(0),z(0){}
 Vec3::Vec3(double x , double y , double z) : x(x), y(y),z(z){}
@@ -39,11 +39,11 @@ double Vec3::dot(const Vec3& other) const{
 }
 
 Vec3 Vec3::cross(const Vec3& a , const Vec3& b){
-    return Vec3(
+    return {
         a.y * b.z - a.z * b.y,
         a.z * b.x - a.x * b.z,
         a.x * b.y - a.y * b.x
-    );
+    };
 }
 
 
