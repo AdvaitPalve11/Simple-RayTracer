@@ -21,7 +21,17 @@ add_executable(RayTracer
     src/window.cpp
     src/framebuffer.cpp
     src/sphere.cpp
-    
+        src/scene.cpp
+        src/plane.cpp
+        src/material.cpp
+        src/light.cpp
+        include/scene.h
+        include/hittable.h
+        include/plane.h
+        include/material.h
+        include/light.h
+        include/hitRecord.h
+
 )
 
 target_link_libraries(RayTracer PRIVATE SDL3::SDL3)
