@@ -17,17 +17,10 @@ This project is my attempt to learn computer graphics by implementing everything
 <table align="center">
 <tr>
 <td align="center">
-<img src="assets/gradient.png" width="350"><br>
-<b>v0.1 - Gradient Background</b>
+<img src="assets/render_withoutBVH.png" width="350"><br>
+<b>v0.4 - Multi-threading & Anti-Aliasing</b>
 </td>
 
-<td align="center">
-<img src="assets/normal_visualization.png" width="350"><br>
-<b>v0.2 - Surface Normal Visualization</b>
-</td>
-</tr>
-
-<tr>
 <td align="center">
 <img src="assets/LambertDiffusion.png" width="350"><br>
 <b>v0.3 - Lambert Diffuse Lighting</b>
@@ -36,11 +29,15 @@ This project is my attempt to learn computer graphics by implementing everything
 
 <tr>
 <td align="center">
-<img src="assets/render_withoutBVH.png" width="350"><br>
-<b>v0.4 - Anti Aliasing with Multi-Threading</b>
+<img src="assets/normal_visualization.png" width="350"><br>
+<b>v0.2 - Surface Normal Visualization</b>
+</td>
+
+<td align="center">
+<img src="assets/gradient.png" width="350"><br>
+<b>v0.1 - Gradient Background</b>
 </td>
 </tr>
-
 </table>
 
 ---
