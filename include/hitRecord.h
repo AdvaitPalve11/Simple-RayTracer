@@ -1,8 +1,10 @@
-//
-// Created by Advait on 02-08-2026.
-//
+#pragma once
 
-#ifndef RAYTRACER_HITRECORD_H
-#define RAYTRACER_HITRECORD_H
+#include "vec3.h"
 
-#endif //RAYTRACER_HITRECORD_H
+struct HitRecord
+{
+    Vec3 point;
+    Vec3 normal;
+    double t;
+};
