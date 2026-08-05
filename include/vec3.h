@@ -32,4 +32,6 @@ class Vec3
     void print() const;
 
     Vec3 reflect(const Vec3& normal) const;
+
+    static Vec3 randomUnitVector();
 };

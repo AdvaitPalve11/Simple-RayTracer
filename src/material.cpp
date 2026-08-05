@@ -35,7 +35,6 @@ double Material::getReflectivity() const
     return reflectivity;
 }
 
-double Material::getRoughness() const
-{
+double Material::getRoughness() const{
     return roughness;
 }

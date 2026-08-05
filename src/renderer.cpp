@@ -16,7 +16,7 @@ Renderer::Renderer(): camera(90.0, 16.0 / 9.0)
     scene.add(std::make_shared<Sphere>(
         Vec3(0, 0, -5),
           1.0 ,  
-          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.8, 0.5)
+          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.5, 0.5)
         ));
 
     scene.add(std::make_shared<Plane>(
@@ -75,9 +75,12 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
         
 
         if (type == MaterialType::Metal){
+
             double reflectivity = record.material.getReflectivity();
 
-            Vec3 reflectedDirection = ray.getDirection().reflect(record.normal).normalized();
+            Vec3 reflectedDirection = ray.getDirection().reflect(record.normal);
+            reflectedDirection = (reflectedDirection + Vec3::randomUnitVector() * record.material.getRoughness()).normalized();
+
             Vec3 reflectionOrigin = record.point + record.normal * 0.001;
 
             Ray reflectedRay(reflectionOrigin, reflectedDirection);
@@ -108,22 +111,33 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
 
 
-
 void Renderer::render(Framebuffer& framebuffer)
 {
     const int width = framebuffer.getWidth();
     const int height = framebuffer.getHeight();
 
+    const int samples = 4;
+
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
-            double u = static_cast<double>(x) / (width - 1);
-            double v = static_cast<double>(y) / (height - 1);
+            Vec3 color(0.0, 0.0, 0.0);
 
-            Ray ray = camera.getRay(u, v);
+            for (int i = 0; i < samples; i++)
+            {
+                double offsetX = static_cast<double>(rand()) / RAND_MAX;
+                double offsetY = static_cast<double>(rand()) / RAND_MAX;
 
-            Vec3 color = trace(ray, 3);
+                double u = (x + offsetX) / (width - 1);
+                double v = (y + offsetY) / (height - 1);
+
+                Ray ray = camera.getRay(u, v);
+
+                color = color + trace(ray, 3);
+            }
+
+            color = color / samples;
 
             uint8_t r = static_cast<uint8_t>(std::clamp(color.x, 0.0, 1.0) * 255.0);
             uint8_t g = static_cast<uint8_t>(std::clamp(color.y, 0.0, 1.0) * 255.0);

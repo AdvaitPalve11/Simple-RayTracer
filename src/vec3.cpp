@@ -1,6 +1,7 @@
 #include "vec3.h"
 #include<iostream>
 #include<cmath>
+#include <random>
 
 Vec3::Vec3() : x(0), y(0),z(0){}
 Vec3::Vec3(double x , double y , double z) : x(x), y(y),z(z){}
@@ -59,4 +60,22 @@ Vec3 Vec3::reflect(const Vec3& normal) const{
 
 Vec3 Vec3::operator-() const{
     return Vec3(-x, -y, -z);
+}
+
+
+Vec3 Vec3::randomUnitVector(){
+    
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<double> dist(-1.0, 1.0);
+
+    while (true)
+    {
+        Vec3 v(dist(gen), dist(gen), dist(gen));
+
+        if (v.lengthSquared() >= 1.0)
+            continue;
+
+        return v.normalized();
+    }
 }
