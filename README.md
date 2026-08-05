@@ -69,7 +69,7 @@ This project is my attempt to learn computer graphics by implementing everything
 - [x] Surface normal visualization
 ---
 
-# Planned Features
+# Features
 
 ### Rendering
 
