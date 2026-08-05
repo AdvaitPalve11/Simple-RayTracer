@@ -17,7 +17,7 @@ This project is my attempt to learn computer graphics by implementing everything
 <table align="center">
 <tr>
 <td align="center">
-<img src="assets/gradient.png" width="350<br>
+<img src="assets/gradient.png" width="350"><br>
 <b>Gradient Background</b>
 </td>
 
@@ -26,6 +26,7 @@ This project is my attempt to learn computer graphics by implementing everything
 <b>Surface Normal Visualization</b>
 </td>
 </tr>
+</table>
 
 ---
 
