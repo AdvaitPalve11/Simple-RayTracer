@@ -5,6 +5,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <random>
 
 
 #include "renderer.h"
@@ -16,18 +17,43 @@
 #include "vec3.h"
 #include "material.h"
 
-Renderer::Renderer(): camera(90.0, 16.0 / 9.0)
+Renderer::Renderer() : camera(60.0, 16.0 / 9.0)
 {
     scene.add(std::make_shared<Sphere>(
+        Vec3(-2.2, 0, -5),
+        1.0,
+       Material(Vec3(1.0, 0.85, 0.2), MaterialType::Metal, 0.55, 0.02)
+    ));
+
+    scene.add(std::make_shared<Sphere>(
         Vec3(0, 0, -5),
-          1.0 ,  
-          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.1, 0.5)
-        ));
+        1.0,
+        Material(Vec3(0.95, 0.95, 0.95), MaterialType::Metal, 1.0, 0.0)
+    ));
+
+    scene.add(std::make_shared<Sphere>(
+        Vec3(2.2, 0, -5),
+        1.0,
+        Material(Vec3(0.2, 0.4, 0.9), MaterialType::Diffuse)
+    ));
 
     scene.add(std::make_shared<Plane>(
-        Vec3(0, -1, 0), Vec3(0, 1, 0) ,  Material(Vec3(0.6,0.6,0.6) ,  MaterialType::Diffuse)));
+        Vec3(0, -1, 0),
+        Vec3(0, 1, 0),
+        Material(Vec3(0.08, 0.08, 0.8), MaterialType::Diffuse)
+    ));
 
-    scene.addLight(std::make_shared<Light>( Vec3(5, 5, 0), Vec3(1, 1, 1), 1.0 ));
+    scene.addLight(std::make_shared<Light>(
+        Vec3(5, 5, 0),
+        Vec3(1.0, 1,1),
+        1
+    ));
+
+   scene.addLight(std::make_shared<Light>(
+    Vec3(-5,4,3),
+    Vec3(0.6,0.7,1.0),
+    1.2
+));
 }
 
 
@@ -42,7 +68,7 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
     if (scene.hit(ray, record)){
 
         const auto& lights = scene.getLights();
-        double brightness = 0.1;
+        double brightness = 0.15;
 
         for (const auto& light : lights){
             Vec3 lightPosition = light->getPosition();
@@ -63,12 +89,14 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
                 double diffuse = std::max(0.0, record.normal.dot(lightDirection));
                 double specular = std::pow(std::max(0.0, reflectionDirection.dot(viewDirection)), 32.0);
 
-                brightness += diffuse;
-                brightness += specular * 0.6;
+                double intensity = light->getIntensity();
+                brightness += diffuse * intensity;
+                brightness += specular * intensity;
+
             }
         }
 
-        brightness = std::min(brightness, 1.0);
+        
 
         Vec3 color = record.material.getColor();
         Vec3 finalColor = color * brightness;
@@ -83,17 +111,19 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
             double reflectivity = record.material.getReflectivity();
 
-            Vec3 reflectedDirection = ray.getDirection().reflect(record.normal);
+            Vec3 reflectedDirection = ray.getDirection().normalized().reflect(record.normal);
             reflectedDirection = (reflectedDirection + Vec3::randomUnitVector() * record.material.getRoughness()).normalized();
 
             Vec3 reflectionOrigin = record.point + record.normal * 0.001;
 
             Ray reflectedRay(reflectionOrigin, reflectedDirection);
 
-            //Vec3 reflectedColor = trace(reflectedRay, depth - 1);
+            Vec3 reflectedColor = trace(reflectedRay, depth - 1);
 
-            //eeturn finalColor * (1.0 - reflectivity) + reflectedColor * reflectivity;
-            return finalColor;
+            Vec3 metalReflection = reflectedColor * color;
+
+            return finalColor * (1.0 - reflectivity) +  metalReflection * reflectivity;
+            
         }
 
         if (type == MaterialType::Glass)
@@ -154,7 +184,7 @@ void Renderer::renderRows(Framebuffer& framebuffer, int startY, int endY)
     const int width = framebuffer.getWidth();
     const int height = framebuffer.getHeight();
 
-    const int samples = 1;
+    const int samples = 4;
 
     for (int y = startY; y < endY; y++)
     {
@@ -164,18 +194,25 @@ void Renderer::renderRows(Framebuffer& framebuffer, int startY, int endY)
 
             for (int i = 0; i < samples; i++)
             {
-                double offsetX = static_cast<double>(rand()) / RAND_MAX;
-                double offsetY = static_cast<double>(rand()) / RAND_MAX;
+                thread_local static std::mt19937 rng(std::random_device{}());
+                thread_local static std::uniform_real_distribution<double> dist(0.0, 1.0);
+
+                double offsetX = dist(rng);
+                double offsetY = dist(rng);
 
                 double u = (x + offsetX) / (width - 1);
                 double v = (y + offsetY) / (height - 1);
 
                 Ray ray = camera.getRay(u, v);
 
-                color = color + trace(ray, 1);
+                color = color + trace(ray, 4);
             }
 
             color = color / samples;
+
+            color.x = std::sqrt(std::clamp(color.x, 0.0, 1.0));
+            color.y = std::sqrt(std::clamp(color.y, 0.0, 1.0));
+            color.z = std::sqrt(std::clamp(color.z, 0.0, 1.0));
 
             uint8_t r = static_cast<uint8_t>(std::clamp(color.x, 0.0, 1.0) * 255.0);
             uint8_t g = static_cast<uint8_t>(std::clamp(color.y, 0.0, 1.0) * 255.0);

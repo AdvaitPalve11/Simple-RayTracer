@@ -34,4 +34,6 @@ class Vec3
     Vec3 reflect(const Vec3& normal) const;
 
     static Vec3 randomUnitVector();
+
+    Vec3 operator*(const Vec3& other) const;
 };

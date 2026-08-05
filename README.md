@@ -34,6 +34,13 @@ This project is my attempt to learn computer graphics by implementing everything
 </td>
 </tr>
 
+<tr>
+<td align="center">
+<img src="assets/render_withoutBVH.png" width="350"><br>
+<b>v0.4 - Anti Aliasing with Multi-Threading</b>
+</td>
+</tr>
+
 </table>
 
 ---
@@ -72,23 +79,23 @@ This project is my attempt to learn computer graphics by implementing everything
 
 - [x] Surface normals
 - [x] Lambert lighting
-- [ ] Shadows
-- [ ] Reflection
+- [x] Shadows
+- [x] Reflection
 - [ ] Refraction
-- [ ] Anti-aliasing
+- [x] Anti-aliasing
 - [ ] Depth of field
 
 ### Engine
 - [x] Scene class
 - [x] Polymorphic Hittable interface
-- [ ] FPS counter
+- [x] FPS counter
 - [ ] Camera movement (WASD)
 - [ ] Mouse look
 - [ ] Scene management
 
 ### Optimization
 
-- [ ] Multithreading
+- [x] Multithreading
 - [ ] Bounding Volume Hierarchy (BVH)
 - [ ] SIMD optimizations
 
