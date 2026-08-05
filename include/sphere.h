@@ -7,9 +7,10 @@ class Sphere : public Hittable{
     private:
         Vec3 center;
         double radius;
+        Material material;
         
     public:
-    Sphere(const Vec3& center , double radius);
+    Sphere(const Vec3& center , double radius, const Material& material);
 
 
    bool hit(const Ray& ray, HitRecord& record) const override;

@@ -1,8 +1,15 @@
-//
-// Created by Advait on 02-08-2026.
-//
+#pragma once
 
-#ifndef RAYTRACER_MATERIAL_H
-#define RAYTRACER_MATERIAL_H
+#include "vec3.h"
 
-#endif //RAYTRACER_MATERIAL_H
+class Material
+{
+private:
+    Vec3 color;
+
+public:
+    Material();
+    Material(const Vec3& color);
+
+    Vec3 getColor() const;
+};

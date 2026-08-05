@@ -1,10 +1,13 @@
 #include "sphere.h"
+#include "material.h"
 #include <cmath>
-Sphere::Sphere(const Vec3& center , double radius) : center(center) , radius(radius){}
+
+Sphere::Sphere(const Vec3& center , double radius , const Material& material) : center(center) , radius(radius) , material(material) {}
 
 bool Sphere::hit(const Ray& ray, HitRecord& record) const{
 
-    Vec3 oc = ray.getOrigin() - center; // OC = O - C
+    
+    Vec3 oc = ray.getOrigin() - center; // OC = O - Cs
     
 
     double a = ray.getDirection().dot(ray.getDirection()); // a = D . D
@@ -20,17 +23,21 @@ bool Sphere::hit(const Ray& ray, HitRecord& record) const{
     double t1 = (-b - sqrtD) / (2 * a);
     double t2 = (-b + sqrtD) / (2 * a);
 
-    if (t1 > 0){
+    const double epsilon = 0.001;
+
+    if (t1 > epsilon){
         record.t = t1;
-        record.point = ray.getOrigin() + ray.getDirection() * record.t;
+        record.point = ray.at(t1);
         record.normal = (record.point - center).normalized();
+        record.material = material;
         return true;
     }
 
-    if (t2 > 0){
+    if (t2 > epsilon){
         record.t = t2;
-        record.point = ray.getOrigin() + ray.getDirection() * record.t;
+       record.point = ray.at(t2);
         record.normal = (record.point - center).normalized();
+        record.material = material;
         return true;
     }
 
