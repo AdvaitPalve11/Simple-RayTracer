@@ -18,14 +18,22 @@ This project is my attempt to learn computer graphics by implementing everything
 <tr>
 <td align="center">
 <img src="assets/gradient.png" width="350"><br>
-<b>Gradient Background</b>
+<b>v0.1 - Gradient Background</b>
 </td>
 
 <td align="center">
 <img src="assets/normal_visualization.png" width="350"><br>
-<b>Surface Normal Visualization</b>
+<b>v0.2 - Surface Normal Visualization</b>
 </td>
 </tr>
+
+<tr>
+<td align="center">
+<img src="assets/LambertDiffusion.png" width="350"><br>
+<b>v0.3 - Lambert Diffuse Lighting</b>
+</td>
+</tr>
+
 </table>
 
 ---

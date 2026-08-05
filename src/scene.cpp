@@ -24,3 +24,13 @@ bool Scene::hit(const Ray& ray, HitRecord& record) const{
 
      return hitAnything;
 }
+
+void Scene::addLight(const std::shared_ptr<Light>& light)
+{
+    lights.push_back(light);
+}
+
+const std::vector<std::shared_ptr<Light>>& Scene::getLights() const
+{
+    return lights;
+}
