@@ -1,15 +1,24 @@
+#include<memory>
+
 #include "renderer.h"
 #include "framebuffer.h"
+#include "sphere.h"
+#include "hitRecord.h"
 
 
-Renderer::Renderer() : camera(90.0, 16.0 / 9.0), sphere(Vec3(0,0,-5),1.0){}
+Renderer::Renderer() : camera(90.0, 16.0 / 9.0){
+    scene.add(std::make_shared<Sphere>(Vec3(0,0,-5),1.0));
+}
 
 // Returns the color for a ray
 uint32_t Renderer::rayColor(const Ray& ray){
-    double t;
+    
+    HitRecord record;
 
-    if (sphere.hit(ray, t))
+    if(scene.hit(ray, record)){
         return 0xFFFF0000;
+    }
+
 
     Vec3 direction = ray.getDirection();
 

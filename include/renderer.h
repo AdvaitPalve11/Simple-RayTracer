@@ -3,7 +3,7 @@
 #include <cstdint>
 #include "camera.h"
 #include "framebuffer.h"
-#include "sphere.h"
+#include "scene.h"
 
 class Renderer{
 public:
@@ -13,6 +13,6 @@ public:
 
 private:
     Camera camera;
-    Sphere sphere;
+    Scene scene;
     uint32_t rayColor(const Ray& ray);
 };
