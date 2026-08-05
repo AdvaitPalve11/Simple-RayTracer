@@ -1,4 +1,5 @@
 #include <memory>
+#include <cmath>
 #include <algorithm>
 
 #include "renderer.h"
@@ -20,59 +21,63 @@ Renderer::Renderer(): camera(90.0, 16.0 / 9.0)
     scene.addLight(std::make_shared<Light>( Vec3(5, 5, 0), Vec3(1, 1, 1), 1.0 ));
 }
 
-uint32_t Renderer::rayColor(const Ray& ray)
+Vec3 Renderer::trace(const Ray& ray, int depth)
 {
+    if (depth <= 0)
+        return Vec3(0.0, 0.0, 0.0);
+
     HitRecord record;
 
-    if (scene.hit(ray, record))
-    {
-        
+    if (scene.hit(ray, record)){
 
         const auto& lights = scene.getLights();
         double brightness = 0.1;
 
         for (const auto& light : lights){
             Vec3 lightPosition = light->getPosition();
+            Vec3 lightDirection = (lightPosition - record.point).normalized();
+            Vec3 viewDirection = -ray.getDirection();
+            Vec3 reflectionDirection = (-lightDirection).reflect(record.normal);
 
-             Vec3 lightDirection = (lightPosition - record.point).normalized();
-             Vec3 shadowOrigin =  record.point + record.normal * 0.001;
-              Ray shadowRay(shadowOrigin, lightDirection);
-              HitRecord shadowRecord;
+            Vec3 shadowOrigin = record.point + record.normal * 0.001;
+            Ray shadowRay(shadowOrigin, lightDirection);
 
-             double lightDistance = (lightPosition - record.point).length();
+            HitRecord shadowRecord;
 
-             bool inShadow =scene.hit(shadowRay, shadowRecord) &&  shadowRecord.t < lightDistance;
+            double lightDistance = (lightPosition - record.point).length();
 
-             if (!inShadow)
-                 brightness += std::max( 0.0, record.normal.dot(lightDirection));
-        
+            bool inShadow = scene.hit(shadowRay, shadowRecord) && shadowRecord.t < lightDistance;
 
+            if (!inShadow) {
+                double diffuse = std::max(0.0, record.normal.dot(lightDirection));
+                double specular = std::pow(std::max(0.0, reflectionDirection.dot(viewDirection)), 64.0);
 
+                brightness += diffuse;
+                brightness += specular * 0.6;
             }
+        }
 
         brightness = std::min(brightness, 1.0);
 
         Vec3 color = record.material.getColor();
-
         Vec3 finalColor = color * brightness;
 
-        uint8_t r = static_cast<uint8_t>(std::clamp(finalColor.x, 0.0, 1.0) * 255.0);
-        uint8_t g = static_cast<uint8_t>(std::clamp(finalColor.y, 0.0, 1.0) * 255.0);
-        uint8_t b = static_cast<uint8_t>(std::clamp(finalColor.z, 0.0, 1.0) * 255.0);
+        Vec3 reflectedDirection = ray.getDirection().reflect(record.normal).normalized();
+        Vec3 reflectionOrigin = record.point + record.normal * 0.001;
+        Ray reflectedRay(reflectionOrigin, reflectedDirection);
 
-        return (255u << 24) |(r << 16) |  (g << 8) |  b;
+        return finalColor;
     }
 
     Vec3 direction = ray.getDirection();
-
     double blend = 0.5 * (direction.y + 1.0);
 
-    uint8_t r = static_cast<uint8_t>((1.0 - blend) * 255 + blend * 127);
-    uint8_t g = static_cast<uint8_t>((1.0 - blend) * 255 + blend * 178);
-    uint8_t b = 255;
+    Vec3 white(1.0, 1.0, 1.0);
+    Vec3 blue(0.5, 0.7, 1.0);
 
-    return (255u << 24) |  (r << 16) | (g << 8) | b;
+    return white * (1.0 - blend) + blue * blend;
 }
+
 
 void Renderer::render(Framebuffer& framebuffer)
 {
@@ -88,7 +93,13 @@ void Renderer::render(Framebuffer& framebuffer)
 
             Ray ray = camera.getRay(u, v);
 
-            framebuffer.setPixel(x, y, rayColor(ray));
+            Vec3 color = trace(ray, 3);
+
+            uint8_t r = static_cast<uint8_t>(std::clamp(color.x, 0.0, 1.0) * 255.0);
+            uint8_t g = static_cast<uint8_t>(std::clamp(color.y, 0.0, 1.0) * 255.0);
+            uint8_t b = static_cast<uint8_t>(std::clamp(color.z, 0.0, 1.0) * 255.0);
+
+            framebuffer.setPixel(x, y, (255u << 24) | (r << 16) | (g << 8) | b);
         }
     }
 }

@@ -52,3 +52,11 @@ void Vec3::print() const{
     std::cout << "(" << x << ", "<< y << ", " << z << ")"<< '\n';
 }
 
+
+Vec3 Vec3::reflect(const Vec3& normal) const{
+    return *this - normal * (2.0 * this->dot(normal));
+}
+
+Vec3 Vec3::operator-() const{
+    return Vec3(-x, -y, -z);
+}

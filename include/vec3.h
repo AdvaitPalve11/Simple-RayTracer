@@ -17,6 +17,8 @@ class Vec3
     Vec3 operator*(double scalar)const;
     Vec3 operator/(double scalar)const;
     
+    Vec3 operator-() const;
+    
 
     double length() const;
     double lengthSquared() const;
@@ -28,4 +30,6 @@ class Vec3
 
     //misc
     void print() const;
+
+    Vec3 reflect(const Vec3& normal) const;
 };

@@ -14,5 +14,5 @@ public:
 private:
     Camera camera;
     Scene scene;
-    uint32_t rayColor(const Ray& ray);
+   Vec3 trace(const Ray& ray, int depth);
 };
