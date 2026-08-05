@@ -1,8 +1,16 @@
-//
-// Created by Advait on 02-08-2026.
-//
+#pragma once
 
-#ifndef RAYTRACER_PLANE_H
-#define RAYTRACER_PLANE_H
+#include "hittable.h"
+#include "vec3.h"
 
-#endif //RAYTRACER_PLANE_H
+class Plane : public Hittable
+{
+private:
+    Vec3 point;
+    Vec3 normal;
+
+public:
+    Plane(const Vec3& point, const Vec3& normal);
+
+    bool hit(const Ray& ray, HitRecord& record) const override;
+};
