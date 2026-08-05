@@ -9,17 +9,23 @@
 #include "light.h"
 #include "hitRecord.h"
 #include "vec3.h"
+#include "material.h"
 
 Renderer::Renderer(): camera(90.0, 16.0 / 9.0)
 {
     scene.add(std::make_shared<Sphere>(
-        Vec3(0, 0, -5),  1.0 ,   Material(Vec3(1.0,0.0,0.0) )));
+        Vec3(0, 0, -5),
+          1.0 ,  
+          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.8, 0.5)
+        ));
 
     scene.add(std::make_shared<Plane>(
-        Vec3(0, -1, 0), Vec3(0, 1, 0) ,  Material(Vec3(0.6,0.6,0.6))));
+        Vec3(0, -1, 0), Vec3(0, 1, 0) ,  Material(Vec3(0.6,0.6,0.6) ,  MaterialType::Diffuse)));
 
     scene.addLight(std::make_shared<Light>( Vec3(5, 5, 0), Vec3(1, 1, 1), 1.0 ));
 }
+
+
 
 Vec3 Renderer::trace(const Ray& ray, int depth)
 {
@@ -50,7 +56,7 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
             if (!inShadow) {
                 double diffuse = std::max(0.0, record.normal.dot(lightDirection));
-                double specular = std::pow(std::max(0.0, reflectionDirection.dot(viewDirection)), 64.0);
+                double specular = std::pow(std::max(0.0, reflectionDirection.dot(viewDirection)), 32.0);
 
                 brightness += diffuse;
                 brightness += specular * 0.6;
@@ -62,12 +68,33 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
         Vec3 color = record.material.getColor();
         Vec3 finalColor = color * brightness;
 
-        Vec3 reflectedDirection = ray.getDirection().reflect(record.normal).normalized();
-        Vec3 reflectionOrigin = record.point + record.normal * 0.001;
-        Ray reflectedRay(reflectionOrigin, reflectedDirection);
+        MaterialType type = record.material.getType();
+        
+        if (type == MaterialType::Diffuse)
+            return finalColor;
+        
+
+        if (type == MaterialType::Metal){
+            double reflectivity = record.material.getReflectivity();
+
+            Vec3 reflectedDirection = ray.getDirection().reflect(record.normal).normalized();
+            Vec3 reflectionOrigin = record.point + record.normal * 0.001;
+
+            Ray reflectedRay(reflectionOrigin, reflectedDirection);
+
+            Vec3 reflectedColor = trace(reflectedRay, depth - 1);
+
+            return finalColor * (1.0 - reflectivity) + reflectedColor * reflectivity;
+        }
+
+        if (type == MaterialType::Glass)
+            return finalColor;
+        
 
         return finalColor;
+
     }
+
 
     Vec3 direction = ray.getDirection();
     double blend = 0.5 * (direction.y + 1.0);
@@ -77,6 +104,9 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
     return white * (1.0 - blend) + blue * blend;
 }
+
+
+
 
 
 void Renderer::render(Framebuffer& framebuffer)
