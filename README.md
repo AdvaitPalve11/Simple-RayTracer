@@ -71,7 +71,7 @@ This project is my attempt to learn computer graphics by implementing everything
 
 
 - [x] Surface normals
-- [ ] Lambert lighting
+- [x] Lambert lighting
 - [ ] Shadows
 - [ ] Reflection
 - [ ] Refraction
