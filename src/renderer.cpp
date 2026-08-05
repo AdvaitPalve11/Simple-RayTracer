@@ -1,6 +1,11 @@
 #include <memory>
 #include <cmath>
 #include <algorithm>
+#include <SDL3/SDL.h>
+#include <iostream>
+#include <thread>
+#include <vector>
+
 
 #include "renderer.h"
 #include "framebuffer.h"
@@ -16,7 +21,7 @@ Renderer::Renderer(): camera(90.0, 16.0 / 9.0)
     scene.add(std::make_shared<Sphere>(
         Vec3(0, 0, -5),
           1.0 ,  
-          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.5, 0.5)
+          Material(Vec3(0.7, 0.7, 0.7), MaterialType::Metal, 0.1, 0.5)
         ));
 
     scene.add(std::make_shared<Plane>(
@@ -85,9 +90,10 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
             Ray reflectedRay(reflectionOrigin, reflectedDirection);
 
-            Vec3 reflectedColor = trace(reflectedRay, depth - 1);
+            //Vec3 reflectedColor = trace(reflectedRay, depth - 1);
 
-            return finalColor * (1.0 - reflectivity) + reflectedColor * reflectivity;
+            //eeturn finalColor * (1.0 - reflectivity) + reflectedColor * reflectivity;
+            return finalColor;
         }
 
         if (type == MaterialType::Glass)
@@ -113,12 +119,44 @@ Vec3 Renderer::trace(const Ray& ray, int depth)
 
 void Renderer::render(Framebuffer& framebuffer)
 {
+    Uint64 start = SDL_GetPerformanceCounter();
+
+    // Multithreading
+    const unsigned int threadCount = std::thread::hardware_concurrency();
+
+    std::vector<std::thread> threads;
+
+    int rowsPerThread = framebuffer.getHeight() / threadCount;
+
+        for (unsigned int i = 0; i < threadCount; i++){
+
+            int startY = i * rowsPerThread;
+
+            int endY = (i == threadCount - 1) ? framebuffer.getHeight() : startY + rowsPerThread;
+
+            threads.emplace_back(&Renderer::renderRows, this, std::ref(framebuffer), startY, endY );
+        }
+
+    for (auto& thread : threads)
+    {
+        thread.join();
+    }
+
+    Uint64 end = SDL_GetPerformanceCounter();
+
+    double ms = (end - start) * 1000.0 / SDL_GetPerformanceFrequency();
+
+    std::cout << ms << " ms\n";
+}
+
+void Renderer::renderRows(Framebuffer& framebuffer, int startY, int endY)
+{
     const int width = framebuffer.getWidth();
     const int height = framebuffer.getHeight();
 
-    const int samples = 4;
+    const int samples = 1;
 
-    for (int y = 0; y < height; y++)
+    for (int y = startY; y < endY; y++)
     {
         for (int x = 0; x < width; x++)
         {
@@ -134,7 +172,7 @@ void Renderer::render(Framebuffer& framebuffer)
 
                 Ray ray = camera.getRay(u, v);
 
-                color = color + trace(ray, 3);
+                color = color + trace(ray, 1);
             }
 
             color = color / samples;

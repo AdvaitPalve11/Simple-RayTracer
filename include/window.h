@@ -13,6 +13,9 @@ class Window{
         int width;
         int height;
 
+        Uint64 lastTime;
+        int frameCount;
+
     public:
         Window(int w , int h , const std::string& title);
         ~Window();

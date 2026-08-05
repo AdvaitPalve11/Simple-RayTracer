@@ -1,5 +1,7 @@
 #include "window.h"
 #include <iostream>
+#include <string>
+#include <sstream>
 
 Window::Window(int w , int h ,const  std::string& title): width(w), height(h) {
 
@@ -17,7 +19,13 @@ Window::Window(int w , int h ,const  std::string& title): width(w), height(h) {
 
     texture = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STREAMING,width,height);
         if(!texture)
-            std::cout<<SDL_GetError<<"\n";
+            std::cout<<SDL_GetError()<<"\n";
+
+    lastTime = SDL_GetTicks();
+    frameCount = 0;
+
+
+
 }
 
 Window::~Window(){
@@ -51,4 +59,21 @@ void Window::present(const Framebuffer& framebuffer){
     SDL_RenderClear(renderer);
     SDL_RenderTexture(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
+
+    frameCount++;
+
+    Uint64 currentTime = SDL_GetTicks();
+
+    if (currentTime - lastTime >= 1000){
+
+        double fps = frameCount * 1000.0 / (currentTime - lastTime);
+
+        std::stringstream title;
+        title << "Ray Tracer | FPS: " << static_cast<int>(fps);
+
+        SDL_SetWindowTitle(window, title.str().c_str());
+
+        frameCount = 0;
+        lastTime = currentTime;
+    }
 }
