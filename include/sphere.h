@@ -1,7 +1,9 @@
-#include<vec3.h>
-#include<ray.h>
+#pragma once
 
-class Sphere {
+#include"vec3.h"
+#include "hittable.h"
+
+class Sphere : public Hittable{
     private:
         Vec3 center;
         double radius;
@@ -10,6 +12,6 @@ class Sphere {
     Sphere(const Vec3& center , double radius);
 
 
-    bool hit(const Ray& ray, double& t) const;
+   bool hit(const Ray& ray, HitRecord& record) const override;
 
 };
