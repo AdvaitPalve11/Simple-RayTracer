@@ -1,3 +1,5 @@
-//
-// Created by Advait on 02-08-2026.
-//
+#include "scene.h"
+
+void Scene::add(const std::shared_ptr<Hittable>& object){
+    objects.push_back(object);
+}

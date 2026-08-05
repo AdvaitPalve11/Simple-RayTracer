@@ -1,8 +1,17 @@
-//
-// Created by Advait on 02-08-2026.
-//
+#pragma once
 
-#ifndef RAYTRACER_SCENE_H
-#define RAYTRACER_SCENE_H
+#include <memory>
+#include<vector>
 
-#endif //RAYTRACER_SCENE_H
+#include "hittable.h"
+
+class Scene {
+
+    private:
+        std::vector<std::shared_ptr<Hittable>> objects;
+    
+    public:
+        void add(const std::shared_ptr<Hittable>& objects);
+
+        bool hit(const Ray& ray , HitRecord& record) const;
+};
