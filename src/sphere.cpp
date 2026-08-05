@@ -2,7 +2,7 @@
 #include <cmath>
 Sphere::Sphere(const Vec3& center , double radius) : center(center) , radius(radius){}
 
-bool Sphere::hit(const Ray& ray, double& t) const{
+bool Sphere::hit(const Ray& ray, HitRecord& record) const{
 
     Vec3 oc = ray.getOrigin() - center; // OC = O - C
     
@@ -21,12 +21,16 @@ bool Sphere::hit(const Ray& ray, double& t) const{
     double t2 = (-b + sqrtD) / (2 * a);
 
     if (t1 > 0){
-        t = t1;
+        record.t = t1;
+        record.point = ray.getOrigin() + ray.getDirection() * record.t;
+        record.normal = (record.point - center).normalized();
         return true;
     }
 
     if (t2 > 0){
-        t = t2;
+        record.t = t2;
+        record.point = ray.getOrigin() + ray.getDirection() * record.t;
+        record.normal = (record.point - center).normalized();
         return true;
     }
 

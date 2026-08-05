@@ -13,7 +13,7 @@ bool Scene::hit(const Ray& ray, HitRecord& record) const{
      //check closest hit object by ray
      for(const auto& object : objects){
 
-        if(object->hit(ray , record)){
+        if(object->hit(ray , tempRecord)){
             if(tempRecord.t < closest){
                 closest= tempRecord.t;
                 record = tempRecord;

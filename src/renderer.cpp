@@ -15,9 +15,13 @@ uint32_t Renderer::rayColor(const Ray& ray){
     
     HitRecord record;
 
-    if(scene.hit(ray, record)){
-        return 0xFFFF0000;
-    }
+    if (scene.hit(ray, record)){
+    uint8_t r = static_cast<uint8_t>((record.normal.x + 1.0) * 0.5 * 255.0);
+    uint8_t g = static_cast<uint8_t>((record.normal.y + 1.0) * 0.5 * 255.0);
+    uint8_t b = static_cast<uint8_t>((record.normal.z + 1.0) * 0.5 * 255.0);
+
+    return (255u << 24) | (r << 16) | (g << 8) | b;
+}
 
 
     Vec3 direction = ray.getDirection();
