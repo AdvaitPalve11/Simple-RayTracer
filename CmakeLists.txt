@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(
     include
     third_party
+    third_party/imgui
+    third_party/imgui/backends
 )
 
 find_package(SDL3 REQUIRED)
@@ -27,8 +29,15 @@ add_executable(RayTracer
     src/aabb.cpp
     src/renderer.cpp
     src/bvhNode.cpp
-        include/threadPool.h
-        src/threadPool.cpp
+    src/threadPool.cpp
+
+    third_party/imgui/imgui.cpp
+    third_party/imgui/imgui_draw.cpp
+    third_party/imgui/imgui_tables.cpp
+    third_party/imgui/imgui_widgets.cpp
+
+    third_party/imgui/backends/imgui_impl_sdl3.cpp
+    third_party/imgui/backends/imgui_impl_sdlrenderer3.cpp
 )
 
 target_link_libraries(RayTracer PRIVATE SDL3::SDL3)
