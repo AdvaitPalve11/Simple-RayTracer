@@ -32,6 +32,9 @@ add_executable(RayTracer
         include/light.h
         include/hitRecord.h
         include/materialType.h
+        include/aabb.h
+        src/aabb.cpp
+        src/aabb.h
 
 )
 
