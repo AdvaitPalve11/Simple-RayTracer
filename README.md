@@ -15,6 +15,14 @@ This project is my attempt to learn computer graphics by implementing everything
 # Demo
 
 <table align="center">
+
+<tr>
+<td colspan="2" align="center">
+<img src="assets/cameraShowCase.gif" width="720"><br>
+<b>v0.5 - Interactive FPS Camera (WASD + Mouse Look)</b>
+</td>
+</tr>
+
 <tr>
 <td align="center">
 <img src="assets/render_withoutBVH.png" width="350"><br>
@@ -38,6 +46,7 @@ This project is my attempt to learn computer graphics by implementing everything
 <b>v0.1 - Gradient Background</b>
 </td>
 </tr>
+
 </table>
 
 ---
