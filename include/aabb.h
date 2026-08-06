@@ -17,4 +17,5 @@ public:
 
     const Vec3& getMin() const;
     const Vec3& getMax() const;
+    
 };
