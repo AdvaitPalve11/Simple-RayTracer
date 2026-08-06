@@ -43,3 +43,11 @@ bool Sphere::hit(const Ray& ray, HitRecord& record) const{
 
     return false;
 }
+
+//AABB Implementation
+AABB Sphere::boundingBox() const
+{
+    Vec3 radiusVec(radius, radius, radius);
+
+    return AABB(center - radiusVec, center + radiusVec);
+}
