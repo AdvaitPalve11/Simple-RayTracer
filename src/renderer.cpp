@@ -46,7 +46,7 @@ Renderer::Renderer() : camera(60.0, 16.0 / 9.0)
     scene.add(std::make_shared<Plane>(
         Vec3(0, -1, 0),
         Vec3(0, 1, 0),
-        Material(Vec3(0.08, 0.08, 0.8), MaterialType::Diffuse)
+        Material(Vec3(0.02, 0.02, 0.02), MaterialType::Metal ,0.35,0.15)
     ));
 
     scene.addLight(std::make_shared<Light>(
