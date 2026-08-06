@@ -16,28 +16,27 @@ add_executable(RayTracer
     src/main.cpp
     src/vec3.cpp
     src/ray.cpp
-    src/renderer.cpp
     src/camera.cpp
     src/window.cpp
     src/framebuffer.cpp
+    src/material.cpp
+    src/light.cpp
     src/sphere.cpp
-        src/scene.cpp
-        src/plane.cpp
-        src/material.cpp
-        src/light.cpp
-        include/scene.h
-        include/hittable.h
-        include/plane.h
-        include/material.h
-        include/light.h
-        include/hitRecord.h
-        include/materialType.h
-        include/aabb.h
-        src/aabb.cpp
-        src/aabb.h
-
+    src/plane.cpp
+    src/scene.cpp
+    src/aabb.cpp
+    src/renderer.cpp
+    src/bvhNode.cpp
+        include/threadPool.h
+        src/threadPool.cpp
 )
 
 target_link_libraries(RayTracer PRIVATE SDL3::SDL3)
 
-target_compile_options(RayTracer PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(RayTracer PRIVATE
+    -O3
+    -march=native
+    -Wall
+    -Wextra
+    -Wpedantic
+)
