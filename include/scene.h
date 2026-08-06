@@ -5,12 +5,15 @@
 
 #include "light.h"
 #include "hittable.h"
+#include "bvhNode.h"
 
 class Scene {
 
     private:
         std::vector<std::shared_ptr<Hittable>> objects;
         std::vector<std::shared_ptr<Light>> lights;
+
+         std::shared_ptr<BVHNode> root;
     
     public:
         void add(const std::shared_ptr<Hittable>& objects);
@@ -20,4 +23,6 @@ class Scene {
         void addLight(const std::shared_ptr<Light>& light);
 
         const std::vector<std::shared_ptr<Light>>& getLights() const;
+
+        void buildBVH();
 };

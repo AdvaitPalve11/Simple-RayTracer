@@ -19,4 +19,6 @@ public:
     );
 
     bool hit(const Ray& ray, HitRecord& record) const override;
+    
+    AABB boundingBox() const override;
 };

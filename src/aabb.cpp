@@ -63,5 +63,23 @@ bool AABB::hit(const Ray& ray, double tMin, double tMax) const{
 
     }
 
+
     return true;
+}
+
+AABB AABB::surroundingBox(const AABB& box1, const AABB& box2)
+{
+    Vec3 small(
+        std::min(box1.getMin().x, box2.getMin().x),
+        std::min(box1.getMin().y, box2.getMin().y),
+        std::min(box1.getMin().z, box2.getMin().z)
+    );
+
+    Vec3 big(
+        std::max(box1.getMax().x, box2.getMax().x),
+        std::max(box1.getMax().y, box2.getMax().y),
+        std::max(box1.getMax().z, box2.getMax().z)
+    );
+
+    return AABB(small, big);
 }

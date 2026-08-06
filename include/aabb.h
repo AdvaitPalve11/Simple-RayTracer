@@ -17,5 +17,5 @@ public:
 
     const Vec3& getMin() const;
     const Vec3& getMax() const;
-    
+    static AABB surroundingBox(const AABB& box1, const AABB& box2);
 };
