@@ -57,3 +57,6 @@ compile_commands.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Dear ImGui
+third_party/imgui.ini
