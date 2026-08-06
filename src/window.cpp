@@ -12,6 +12,9 @@ Window::Window(int w , int h ,const  std::string& title): width(w), height(h) {
     window = SDL_CreateWindow(title.c_str(),width,height,SDL_WINDOW_RESIZABLE);
         if(!window)
             std::cout<<SDL_GetError() << "\n";
+        
+        SDL_SetWindowRelativeMouseMode(window, true);
+
 
     renderer = SDL_CreateRenderer(window,nullptr);
         if(!renderer)
@@ -35,13 +38,25 @@ Window::~Window(){
     SDL_Quit();
 }
 
-bool Window::processEvents(){
+bool Window::processEvents()
+{
+    mouseDeltaX = 0;
+    mouseDeltaY = 0;
+
     SDL_Event event;
 
-    while(SDL_PollEvent(&event)){
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
+            case SDL_EVENT_QUIT:
+                return false;
 
-        if(event.type == SDL_EVENT_QUIT)
-            return false;
+            case SDL_EVENT_MOUSE_MOTION:
+                mouseDeltaX += event.motion.xrel;
+                mouseDeltaY += event.motion.yrel;
+                break;
+        }
     }
 
     return true;
@@ -76,4 +91,12 @@ void Window::present(const Framebuffer& framebuffer){
         frameCount = 0;
         lastTime = currentTime;
     }
+}
+
+int Window::getMouseDeltaX() const{
+    return mouseDeltaX;
+}
+
+int Window::getMouseDeltaY() const{
+    return mouseDeltaY;
 }

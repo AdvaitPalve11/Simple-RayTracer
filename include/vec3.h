@@ -10,6 +10,7 @@ class Vec3
 
     Vec3(); // Initializer list   
     Vec3(double x , double y , double z);
+    Vec3(double value): x(value), y(value), z(value){}
         
     //Operations
     Vec3 operator+(const Vec3& other) const;
@@ -36,4 +37,37 @@ class Vec3
     static Vec3 randomUnitVector();
 
     Vec3 operator*(const Vec3& other) const;
+
+    Vec3& operator+=(const Vec3& other)
+{
+    x += other.x;
+    y += other.y;
+    z += other.z;
+    return *this;
+}
+
+Vec3& operator-=(const Vec3& other)
+{
+    x -= other.x;
+    y -= other.y;
+    z -= other.z;
+    return *this;
+}
+
+Vec3& operator*=(double s)
+{
+    x *= s;
+    y *= s;
+    z *= s;
+    return *this;
+}
+
+Vec3& operator/=(double s)
+{
+    x /= s;
+    y /= s;
+    z /= s;
+    return *this;
+}
+
 };

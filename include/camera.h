@@ -3,23 +3,48 @@
 #include "ray.h"
 #include "vec3.h"
 
-class Camera{
+class Camera
+{
+private:
+    // Position
+    Vec3 position;
 
-    private:
-        Vec3 position;
+    // Camera orientation
+    Vec3 forward;
+    Vec3 right;
+    Vec3 up;
+    Vec3 worldUp;
 
-        Vec3 forward;
-        Vec3 up;
-        Vec3 right;
+    // Euler angles
+    double yaw;
+    double pitch;
 
-        double fov;
-        double aspectRatio;
+    // Camera settings
+    double fov;
+    double aspectRatio;
 
-    public:
-        Camera(double fov, double aspectRatio);
+    bool dirty = true;
 
-        Ray getRay(double u, double v) const;
+private:
+    void updateVectors();
 
+public:
+    Camera(double fov, double aspectRatio);
 
-        Vec3 getPosition() const;
+    Ray getRay(double u, double v) const;
+
+    bool isDirty() const;
+    void clearDirty();
+
+    // Movement
+    void moveForward(double distance);
+    void moveRight(double distance);
+    void moveUp(double distance);
+
+    // Rotation
+    void rotate(double deltaYaw, double deltaPitch);
+
+    // Getters
+    const Vec3& getPosition() const;
+    const Vec3& getForward() const;
 };

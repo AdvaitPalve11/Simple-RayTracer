@@ -16,6 +16,10 @@ class Window{
         Uint64 lastTime;
         int frameCount;
 
+        //mouse settings
+         int mouseDeltaX = 0;
+         int mouseDeltaY = 0;
+
     public:
         Window(int w , int h , const std::string& title);
         ~Window();
@@ -25,4 +29,9 @@ class Window{
         void clear();
 
         void present(const Framebuffer& framebuffer);
+
+        int getMouseDeltaX() const;
+        int getMouseDeltaY() const;
+
+        void resetMouseDelta();
 };
