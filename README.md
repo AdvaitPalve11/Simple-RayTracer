@@ -56,7 +56,6 @@ This project is my attempt to learn computer graphics by implementing everything
 
 ### Rendering
 
-- [x] PNG renderer
 - [x] Real-time SDL renderer
 - [x] Framebuffer
 - [x] Perspective camera
@@ -86,14 +85,14 @@ This project is my attempt to learn computer graphics by implementing everything
 - [x] Scene class
 - [x] Polymorphic Hittable interface
 - [x] FPS counter
-- [ ] Camera movement (WASD)
-- [ ] Mouse look
+- [x] Camera movement (WASD)
+- [x] Mouse look
 - [ ] Scene management
 
 ### Optimization
 
 - [x] Multithreading
-- [ ] Bounding Volume Hierarchy (BVH)
+- [x] Bounding Volume Hierarchy (BVH)
 - [ ] SIMD optimizations
 
 ### Future
